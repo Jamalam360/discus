@@ -24,7 +24,7 @@
 
 package com.jamalam360;
 
-import com.jamalam360.data.SoundFile;
+import com.jamalam360.data.SoundFiles;
 import com.jamalam360.data.SoundsJson;
 import net.devtech.arrp.api.RRPCallback;
 import net.devtech.arrp.api.RRPPreGenEntrypoint;
@@ -37,7 +37,9 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DiscusModInit implements RRPPreGenEntrypoint, ModInitializer {
     public static Logger LOGGER = LogManager.getLogger();
@@ -48,17 +50,19 @@ public class DiscusModInit implements RRPPreGenEntrypoint, ModInitializer {
     private static final ArrayList<Identifier> SOUNDS = new ArrayList<>();
     public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(id("rrp").toString());
 
-    private static final SoundEvent TEST_EVENT = new SoundEvent(id("test_sound"));
+    private static final HashMap<Identifier, SoundEvent> GENERATED_SOUND_EVENTS = new HashMap<>();
 
     @Override
     public void pregen() {
         log(Level.INFO, "Initializing '" + MOD_NAME + "' under the ID '" + MOD_ID + "'");
 
-        SoundFile.copyAllSoundFiles();
+        SoundFiles.copyAllSoundFiles(); //Copies sound files from the config dir to the ARRP pack
 
-        SOUNDS.add(id("test_sound"));
-        //SOUNDS.add(id("test_sound_2"));
-        //SOUNDS.add(id("test_sound_3"));
+        for (File file : SoundFiles.getAllSoundFiles()) {
+            SOUNDS.add(id(DiscusUtils.cleanFileName(file.getName())));
+            Identifier identifier = id(DiscusUtils.cleanFileName(file.getName()));
+            GENERATED_SOUND_EVENTS.put(identifier, new SoundEvent(identifier));
+        }
 
         SoundsJson.initializeJson();
         RESOURCE_PACK.addAsset(id("sounds.json"), SoundsJson.writeNewSounds(SOUNDS).getBytes());
@@ -68,8 +72,9 @@ public class DiscusModInit implements RRPPreGenEntrypoint, ModInitializer {
 
     @Override
     public void onInitialize() {
-
-        Registry.register(Registry.SOUND_EVENT, id("test_sound"), TEST_EVENT);
+        for (Identifier id : GENERATED_SOUND_EVENTS.keySet()) {
+            Registry.register(Registry.SOUND_EVENT, id, GENERATED_SOUND_EVENTS.get(id));
+        }
     }
 
     public static void log(Level level, String message) {
