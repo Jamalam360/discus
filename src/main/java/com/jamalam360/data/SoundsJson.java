@@ -14,13 +14,12 @@ import static com.jamalam360.DiscusModInit.id;
 
 public class SoundsJson {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final JsonParser PARSER = new JsonParser();
 
     public static String writeNewSounds(ArrayList<Identifier> soundIds) {
         try {
             StringWriter writer = new StringWriter();
             IOUtils.copy(DiscusModInit.RESOURCE_PACK.open(ResourceType.CLIENT_RESOURCES, id("sounds.json")), writer, Charset.defaultCharset());
-            JsonElement jsonElement = PARSER.parse(writer.toString());
+            JsonElement jsonElement = new JsonParser().parse(writer.toString());
 
             for (Identifier id : soundIds) {
                 JsonObject sound = new JsonObject();
@@ -36,7 +35,15 @@ public class SoundsJson {
 
             return GSON.toJson(jsonElement);
         } catch (Exception e) {
-            e.printStackTrace();
+            /*
+            You know the rules and so do I
+            We're no strangers to empty catch blocks
+            Never gonna handle that exception
+            Never gonna print the stack trace
+            Never gonna actually write safe code
+
+            Thank you I'm here all week
+            */
         }
 
         return "";

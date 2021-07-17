@@ -29,7 +29,9 @@ import com.jamalam360.data.SoundsJson;
 import net.devtech.arrp.api.RRPCallback;
 import net.devtech.arrp.api.RRPPreGenEntrypoint;
 import net.devtech.arrp.api.RuntimeResourcePack;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -47,25 +49,34 @@ public class DiscusModInit implements RRPPreGenEntrypoint, ModInitializer {
     public static final String MOD_ID = "discus";
     public static final String MOD_NAME = "Discus";
 
+    /**
+     * Stores all the registered sounds in the mod that can be reference when registering sound events and constructing the sounds.json
+     */
     private static final ArrayList<Identifier> SOUNDS = new ArrayList<>();
+
     public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(id("rrp").toString());
 
+    /**
+     * A map of all sound events to be registered, along with their identifiers
+     */
     private static final HashMap<Identifier, SoundEvent> GENERATED_SOUND_EVENTS = new HashMap<>();
 
     @Override
     public void pregen() {
-        log(Level.INFO, "Initializing '" + MOD_NAME + "' under the ID '" + MOD_ID + "'");
+        log(Level.INFO, "Generating resources...");
 
-        SoundFiles.copyAllSoundFiles(); //Copies sound files from the config dir to the ARRP pack
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) { //Only add to the resource pack on the client, since that is the only place it needs to be
+            SoundFiles.copyAllSoundFiles(); //Copies sound files from the config dir to the ARRP pack
 
-        for (File file : SoundFiles.getAllSoundFiles()) {
-            SOUNDS.add(id(DiscusUtils.cleanFileName(file.getName())));
-            Identifier identifier = id(DiscusUtils.cleanFileName(file.getName()));
-            GENERATED_SOUND_EVENTS.put(identifier, new SoundEvent(identifier));
+            for (File file : SoundFiles.getAllSoundFiles()) {
+                SOUNDS.add(id(DiscusUtils.cleanFileName(file.getName())));
+                Identifier identifier = id(DiscusUtils.cleanFileName(file.getName()));
+                GENERATED_SOUND_EVENTS.put(identifier, new SoundEvent(identifier));
+            }
+
+            SoundsJson.initializeJson();
+            RESOURCE_PACK.addAsset(id("sounds.json"), SoundsJson.writeNewSounds(SOUNDS).getBytes());
         }
-
-        SoundsJson.initializeJson();
-        RESOURCE_PACK.addAsset(id("sounds.json"), SoundsJson.writeNewSounds(SOUNDS).getBytes());
 
         RRPCallback.BEFORE_VANILLA.register(a -> a.add(RESOURCE_PACK));
     }
