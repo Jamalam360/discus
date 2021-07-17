@@ -57,8 +57,8 @@ public class DiscusModInit implements RRPPreGenEntrypoint, ModInitializer {
         SoundFile.copyAllSoundFiles();
 
         SOUNDS.add(id("test_sound"));
-        SOUNDS.add(id("test_sound_2"));
-        SOUNDS.add(id("test_sound_3"));
+        //SOUNDS.add(id("test_sound_2"));
+        //SOUNDS.add(id("test_sound_3"));
 
         SoundsJson.initializeJson();
         RESOURCE_PACK.addAsset(id("sounds.json"), SoundsJson.writeNewSounds(SOUNDS).getBytes());
@@ -68,6 +68,7 @@ public class DiscusModInit implements RRPPreGenEntrypoint, ModInitializer {
 
     @Override
     public void onInitialize() {
+
         Registry.register(Registry.SOUND_EVENT, id("test_sound"), TEST_EVENT);
     }
 
