@@ -17,14 +17,16 @@
   "icon": "assets/discus/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "com.jamalam360.TemplateModInit"
+    "rrp:pregen": [
+      "com.jamalam360.DiscusModInit"
     ],
-    "client": [],
+    "main": [
+      "com.jamalam360.DiscusModInit"
+    ],
     "server": []
   },
   "mixins": [
-    "templatemod.mixins.json"
+    "discus.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.11.3",
