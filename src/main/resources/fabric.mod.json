@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "templatemod",
+  "id": "discus",
   "version": "${version}",
-  "name": "Template Mod",
-  "description": "A Template Mod",
+  "name": "Discus",
+  "description": "A Music Disc Mod",
   "authors": [
     "Jamalam360 - Owner, Developer"
   ],
@@ -14,7 +14,7 @@
     "sources": "https://github.com/Jamalam360/FabricTemplateMod"
   },
   "license": "MIT",
-  "icon": "assets/templatemod/icon.png",
+  "icon": "assets/discus/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
