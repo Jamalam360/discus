@@ -43,18 +43,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.jamalam360.Identifiers.id;
+
 public class DiscusModInit implements RRPPreGenEntrypoint, ModInitializer {
     public static Logger LOGGER = LogManager.getLogger();
-
-    public static final String MOD_ID = "discus";
-    public static final String MOD_NAME = "Discus";
 
     /**
      * Stores all the registered sounds in the mod that can be reference when registering sound events and constructing the sounds.json
      */
     private static final ArrayList<Identifier> SOUNDS = new ArrayList<>();
 
-    public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(id("rrp").toString());
+    public static final RuntimeResourcePack RESOURCE_PACK = RuntimeResourcePack.create(id("sounds_rrp").toString());
 
     /**
      * A map of all sound events to be registered, along with their identifiers
@@ -90,9 +89,5 @@ public class DiscusModInit implements RRPPreGenEntrypoint, ModInitializer {
 
     public static void log(Level level, String message) {
         LOGGER.log(level, message);
-    }
-
-    public static Identifier id(String path) {
-        return new Identifier(MOD_ID, path);
     }
 }

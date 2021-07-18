@@ -7,13 +7,16 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
-import static com.jamalam360.DiscusModInit.id;
+import static com.jamalam360.Identifiers.id;
 import static com.jamalam360.DiscusModInit.log;
 
 public class SoundFiles {
     private static final File SOUNDS_CONFIG_DIRECTORY = new File(FabricLoader.getInstance().getConfigDir().resolve("discus").toString());
+    private static final File SOUNDS_CACHE_DIRECTORY = new File(FabricLoader.getInstance().getConfigDir().resolve("discus/caches").toString());
     private static final String SOUNDS_PATH = "sounds/";
 
     public static void copyAllSoundFiles() {
@@ -35,5 +38,18 @@ public class SoundFiles {
 
     public static File[] getAllSoundFiles() {
         return SOUNDS_CONFIG_DIRECTORY.listFiles();
+    }
+
+    public static String[] getAllCachedFileNames() {
+        ArrayList<String> fileNames = new ArrayList<>();
+        File[] files = SOUNDS_CACHE_DIRECTORY.listFiles();
+
+        Arrays.stream(files).forEach((file -> fileNames.add(file.getName())));
+
+        return fileNames.toArray(new String[0]);
+    }
+
+    public static boolean isCached(String fileName) {
+        return Arrays.stream(getAllCachedFileNames()).toList().contains(fileName);
     }
 }

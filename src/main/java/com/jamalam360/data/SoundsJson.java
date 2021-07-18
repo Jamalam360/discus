@@ -10,7 +10,7 @@ import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-import static com.jamalam360.DiscusModInit.id;
+import static com.jamalam360.Identifiers.id;
 
 public class SoundsJson {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
