@@ -26,11 +26,13 @@ package com.jamalam360;
 
 import com.jamalam360.data.SoundFiles;
 import com.jamalam360.data.SoundsJson;
+import com.jamalam360.networking.NetworkingManager;
 import net.devtech.arrp.api.RRPCallback;
 import net.devtech.arrp.api.RRPPreGenEntrypoint;
 import net.devtech.arrp.api.RuntimeResourcePack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
@@ -84,7 +86,11 @@ public class DiscusModInit implements RRPPreGenEntrypoint, ModInitializer {
     public void onInitialize() {
         for (Identifier id : GENERATED_SOUND_EVENTS.keySet()) {
             Registry.register(Registry.SOUND_EVENT, id, GENERATED_SOUND_EVENTS.get(id));
+            Registry.register(Registry.ITEM, id, new DiscusDiscItem(GENERATED_SOUND_EVENTS.get(id)));
         }
+
+        ServerPlayConnectionEvents.JOIN.register(((handler, sender, server) -> NetworkingManager.onPlayerJoin(handler, sender, server)));
+        NetworkingManager.registerPackets();
     }
 
     public static void log(Level level, String message) {
