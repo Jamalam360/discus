@@ -23,7 +23,9 @@
     "main": [
       "com.jamalam360.DiscusModInit"
     ],
-    "server": []
+    "client": [
+      "com.jamalam360.DiscusModClientInit"
+    ]
   },
   "mixins": [
     "discus.mixins.json"

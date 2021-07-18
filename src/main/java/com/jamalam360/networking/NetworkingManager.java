@@ -16,9 +16,12 @@ public class NetworkingManager {
         ServerSoundNetworking.sendRequiredIdentifiers(SoundFiles.getAllSoundFiles(), sender);
     }
 
-    public static void registerPackets() {
+    public static void registerServerPackets() {
+        ServerPlayNetworking.registerGlobalReceiver(Identifiers.C2S_REQUEST_FILES, (((server, player, handler, buf, responseSender) -> ServerSoundNetworking.sendRequiredFiles(buf, responseSender))));
+    }
+
+    public static void registerClientPackets() {
         ClientPlayNetworking.registerGlobalReceiver(Identifiers.S2C_REQUIRED_FILES, ((client, handler, buf, responseSender) -> ClientSoundNetworking.receiveRequiredFiles(buf)));
         ClientPlayNetworking.registerGlobalReceiver(Identifiers.S2C_SEND_FILE, (((client, handler, buf, responseSender) -> ClientSoundNetworking.receiveFile(buf))));
-        ServerPlayNetworking.registerGlobalReceiver(Identifiers.C2S_REQUEST_FILES, (((server, player, handler, buf, responseSender) -> ServerSoundNetworking.sendRequiredFiles(buf, responseSender))));
     }
 }

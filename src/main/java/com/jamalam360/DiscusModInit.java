@@ -90,7 +90,7 @@ public class DiscusModInit implements RRPPreGenEntrypoint, ModInitializer {
         }
 
         ServerPlayConnectionEvents.JOIN.register(((handler, sender, server) -> NetworkingManager.onPlayerJoin(handler, sender, server)));
-        NetworkingManager.registerPackets();
+        NetworkingManager.registerServerPackets();
     }
 
     public static void log(Level level, String message) {
