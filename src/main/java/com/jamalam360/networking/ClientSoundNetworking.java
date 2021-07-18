@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.network.PacketByteBuf;
 import org.apache.commons.io.FileUtils;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 @Environment(EnvType.CLIENT)
 public class ClientSoundNetworking {
-    public static void receiveRequiredFiles(PacketByteBuf packet) {
+    public static void receiveRequiredFiles(PacketByteBuf packet, PacketSender sender) {
         int numberOfFiles = packet.readInt();
         ArrayList<String> missingFiles = new ArrayList<>();
 
@@ -29,11 +30,11 @@ public class ClientSoundNetworking {
         PacketByteBuf packetToSend = PacketByteBufs.create();
 
         packetToSend.writeInt(missingFiles.size());
-        missingFiles.forEach(packet::writeString);
+        missingFiles.forEach(packetToSend::writeString);
 
         System.out.println(missingFiles);
 
-        ClientPlayNetworking.send(Identifiers.C2S_REQUEST_FILES, packetToSend);
+        sender.sendPacket(Identifiers.C2S_REQUEST_FILES, packetToSend);
     }
 
     public static void receiveFile(PacketByteBuf packet) {

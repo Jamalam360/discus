@@ -21,7 +21,7 @@ public class NetworkingManager {
     }
 
     public static void registerClientPackets() {
-        ClientPlayNetworking.registerGlobalReceiver(Identifiers.S2C_REQUIRED_FILES, ((client, handler, buf, responseSender) -> ClientSoundNetworking.receiveRequiredFiles(buf)));
+        ClientPlayNetworking.registerGlobalReceiver(Identifiers.S2C_REQUIRED_FILES, ((client, handler, buf, responseSender) -> ClientSoundNetworking.receiveRequiredFiles(buf, responseSender)));
         ClientPlayNetworking.registerGlobalReceiver(Identifiers.S2C_SEND_FILE, (((client, handler, buf, responseSender) -> ClientSoundNetworking.receiveFile(buf))));
     }
 }
