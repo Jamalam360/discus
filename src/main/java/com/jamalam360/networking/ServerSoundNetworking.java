@@ -39,25 +39,24 @@ public class ServerSoundNetworking {
         identifiers.forEach(packet::writeString);
 
         sender.sendPacket(Identifiers.S2C_REQUIRED_FILES, packet);
-        System.out.println(packet);
+        System.out.println(identifiers);
     }
 
     public static void sendRequiredFiles(PacketByteBuf buf, PacketSender sender) {
-        PacketByteBuf newPacket = PacketByteBufs.create();
-
         for (int i = 0; i < buf.readInt(); i++) {
+            PacketByteBuf newPacket = PacketByteBufs.create();
             String fileName = buf.readString();
 
             File file = SoundFiles.getSoundFile(fileName);
 
             try {
-                buf.writeByteArray(FileUtils.readFileToByteArray(file));
-                sender.sendPacket(Identifiers.S2C_SEND_FILE, buf);
+                newPacket.writeByteArray(FileUtils.readFileToByteArray(file));
+                sender.sendPacket(Identifiers.S2C_SEND_FILE, newPacket);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            System.out.println(newPacket);
+            System.out.println(fileName);
         }
     }
 }
