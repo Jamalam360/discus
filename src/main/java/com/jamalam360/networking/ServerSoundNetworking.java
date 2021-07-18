@@ -39,6 +39,7 @@ public class ServerSoundNetworking {
         identifiers.forEach(packet::writeString);
 
         sender.sendPacket(Identifiers.S2C_REQUIRED_FILES, packet);
+        System.out.println(packet);
     }
 
     public static void sendRequiredFiles(PacketByteBuf buf, PacketSender sender) {
@@ -55,6 +56,8 @@ public class ServerSoundNetworking {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            System.out.println(newPacket);
         }
     }
 }

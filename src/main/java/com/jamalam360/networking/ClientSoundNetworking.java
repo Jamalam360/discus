@@ -31,6 +31,8 @@ public class ClientSoundNetworking {
         packetToSend.writeInt(missingFiles.size());
         missingFiles.forEach(packet::writeString);
 
+        System.out.println(packet);
+
         ClientPlayNetworking.send(Identifiers.C2S_REQUEST_FILES, packetToSend);
     }
 
@@ -44,5 +46,7 @@ public class ClientSoundNetworking {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println(packet);
     }
 }

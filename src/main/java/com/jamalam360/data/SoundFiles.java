@@ -43,7 +43,7 @@ public class SoundFiles {
 
     public static File getSoundFile(String fileName) {
         for (File file : getAllSoundFiles()) {
-            if(file.getName().equals(fileName)) {
+            if (file.getName().equals(fileName)) {
                 return file;
             }
         }
@@ -55,7 +55,9 @@ public class SoundFiles {
         ArrayList<String> fileNames = new ArrayList<>();
         File[] files = SOUNDS_CACHE_DIRECTORY.listFiles();
 
-        Arrays.stream(files).forEach((file -> fileNames.add(file.getName())));
+        if (files != null && files.length > 0) {
+            Arrays.stream(files).forEach((file -> fileNames.add(file.getName())));
+        }
 
         return fileNames.toArray(new String[0]);
     }
