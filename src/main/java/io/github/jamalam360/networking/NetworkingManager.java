@@ -21,9 +21,7 @@ public class NetworkingManager {
     }
 
     public static void registerClientPackets() {
-        ClientPlayNetworking.registerGlobalReceiver(new Identifier("test_packet", "test_packet"), (((client, handler, buf, responseSender) -> {
-            ClientRuntimeResourcePackSendListener.receive(buf);
-        })));
+        ClientPlayNetworking.registerGlobalReceiver(new Identifier("test_packet", "test_packet"), (((client, handler, buf, responseSender) -> ClientRuntimeResourcePackSendListener.receive(buf))));
     }
 }
 
