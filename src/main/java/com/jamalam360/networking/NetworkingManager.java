@@ -1,27 +1,40 @@
 package com.jamalam360.networking;
 
-import com.jamalam360.Identifiers;
-import com.jamalam360.data.SoundFiles;
+import com.jamalam360.DiscusModInit;
+import net.devtech.arrp.api.RuntimeResourcePack;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.resource.ResourcePackSource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
+import net.minecraft.util.Identifier;
+import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.Level;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.zip.ZipOutputStream;
 
 /**
  * @author Jamalam360
  */
 public class NetworkingManager {
-    public static void onPlayerJoin(ServerPlayNetworkHandler handler, PacketSender sender, MinecraftServer server) {
-        ServerSoundNetworking.sendRequiredIdentifiers(SoundFiles.getAllSoundFiles(), sender);
-    }
-
-    public static void registerServerPackets() {
-        ServerPlayNetworking.registerGlobalReceiver(Identifiers.C2S_REQUEST_FILES, (((server, player, handler, buf, responseSender) -> ServerSoundNetworking.sendRequiredFiles(buf, responseSender))));
+    public static void onPlayerJoin(ServerPlayNetworkHandler handler, PacketSender sender, MinecraftServer server, RuntimeResourcePack pack) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        new RuntimeResourcePackSendS2CPacket(DiscusModInit.SERVER_PACK).write(buf);
+        sender.sendPacket(new Identifier("test_packet", "test_packet"), buf);
     }
 
     public static void registerClientPackets() {
-        ClientPlayNetworking.registerGlobalReceiver(Identifiers.S2C_REQUIRED_FILES, ((client, handler, buf, responseSender) -> ClientSoundNetworking.receiveRequiredFiles(buf, responseSender)));
-        ClientPlayNetworking.registerGlobalReceiver(Identifiers.S2C_SEND_FILE, (((client, handler, buf, responseSender) -> ClientSoundNetworking.receiveFile(buf))));
+        ClientPlayNetworking.registerGlobalReceiver(new Identifier("test_packet", "test_packet"), (((client, handler, buf, responseSender) -> {
+            ClientRuntimeResourcePackSendListener.receive(buf);
+        })));
     }
 }
+

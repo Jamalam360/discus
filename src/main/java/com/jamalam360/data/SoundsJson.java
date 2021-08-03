@@ -18,7 +18,7 @@ public class SoundsJson {
     public static String writeNewSounds(ArrayList<Identifier> soundIds) {
         try {
             StringWriter writer = new StringWriter();
-            IOUtils.copy(DiscusModInit.RESOURCE_PACK.open(ResourceType.CLIENT_RESOURCES, id("sounds.json")), writer, Charset.defaultCharset());
+            IOUtils.copy(DiscusModInit.SERVER_PACK.open(ResourceType.CLIENT_RESOURCES, id("sounds.json")), writer, Charset.defaultCharset());
             JsonElement jsonElement = new JsonParser().parse(writer.toString());
 
             for (Identifier id : soundIds) {
@@ -50,6 +50,6 @@ public class SoundsJson {
     }
 
     public static void initializeJson() {
-        DiscusModInit.RESOURCE_PACK.addAsset(id("sounds.json"), "{}".getBytes());
+        DiscusModInit.SERVER_PACK.addAsset(id("sounds.json"), "{}".getBytes());
     }
 }

@@ -30,7 +30,7 @@ public class SoundFiles {
             }
 
             for (File soundFile : soundFiles) {
-                DiscusModInit.RESOURCE_PACK.addAsset(id(SOUNDS_PATH + soundFile.getName().toLowerCase(Locale.ROOT)), FileUtils.readFileToByteArray(soundFile));
+                DiscusModInit.SERVER_PACK.addAsset(id(SOUNDS_PATH + soundFile.getName().toLowerCase(Locale.ROOT)), FileUtils.readFileToByteArray(soundFile));
             }
         } catch (Exception e) {
             //Cry all you want Java, you and I both know this catch block will never be reached
