@@ -1,6 +1,6 @@
-package com.jamalam360.data;
+package io.github.jamalam360.data;
 
-import com.jamalam360.DiscusModInit;
+import io.github.jamalam360.DiscusModInit;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.text.TranslatableText;
 import org.apache.commons.io.FileUtils;
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-import static com.jamalam360.DiscusModInit.log;
-import static com.jamalam360.Identifiers.id;
+import static io.github.jamalam360.DiscusModInit.log;
+import static io.github.jamalam360.Identifiers.id;
 
 public class SoundFiles {
     private static final File SOUNDS_CONFIG_DIRECTORY = new File(FabricLoader.getInstance().getConfigDir().resolve("discus").toString());

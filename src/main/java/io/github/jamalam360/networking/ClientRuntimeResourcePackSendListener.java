@@ -1,6 +1,6 @@
-package com.jamalam360.networking;
+package io.github.jamalam360.networking;
 
-import com.jamalam360.DiscusModInit;
+import io.github.jamalam360.DiscusModInit;
 import net.minecraft.network.PacketByteBuf;
 import org.apache.commons.io.FileUtils;
 

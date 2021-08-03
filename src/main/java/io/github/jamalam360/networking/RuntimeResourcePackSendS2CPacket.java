@@ -1,10 +1,8 @@
-package com.jamalam360.networking;
+package io.github.jamalam360.networking;
 
 import net.devtech.arrp.api.RuntimeResourcePack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.text.Text;
 import org.apache.commons.io.FileUtils;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -22,9 +22,9 @@
  * THE SOFTWARE.
  */
 
-package com.jamalam360;
+package io.github.jamalam360;
 
-import com.jamalam360.networking.NetworkingManager;
+import io.github.jamalam360.networking.NetworkingManager;
 import net.devtech.arrp.api.RRPCallback;
 import net.devtech.arrp.api.RRPPreGenEntrypoint;
 import net.devtech.arrp.api.RuntimeResourcePack;
@@ -46,7 +46,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.jamalam360.Identifiers.id;
+import static io.github.jamalam360.Identifiers.id;
 
 public class DiscusModInit implements RRPPreGenEntrypoint, ModInitializer {
     public static Logger LOGGER = LogManager.getLogger();

@@ -18,13 +18,13 @@
   "environment": "*",
   "entrypoints": {
     "rrp:pregen": [
-      "com.jamalam360.DiscusModInit"
+      "io.github.jamalam360.DiscusModInit"
     ],
     "main": [
-      "com.jamalam360.DiscusModInit"
+      "io.github.jamalam360.DiscusModInit"
     ],
     "client": [
-      "com.jamalam360.DiscusModClientInit"
+      "io.github.jamalam360.DiscusModClientInit"
     ]
   },
   "mixins": [

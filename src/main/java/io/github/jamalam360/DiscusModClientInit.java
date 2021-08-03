@@ -1,6 +1,6 @@
-package com.jamalam360;
+package io.github.jamalam360;
 
-import com.jamalam360.networking.NetworkingManager;
+import io.github.jamalam360.networking.NetworkingManager;
 import net.fabricmc.api.ClientModInitializer;
 
 /**

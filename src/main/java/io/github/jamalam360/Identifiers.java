@@ -1,4 +1,4 @@
-package com.jamalam360;
+package io.github.jamalam360;
 
 import net.minecraft.util.Identifier;
 
